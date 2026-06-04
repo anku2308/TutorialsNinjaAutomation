@@ -1,45 +1,51 @@
 pipeline {
-
-agent any
-
-tools {
-    jdk 'JAVA_HOME'    // Change 'JDK21' to whatever is in your settings
-    maven 'MAVEN_HOME' // Change 'Maven3' to whatever is in your settings
-}
-
-stages {
-
-    stage('Git Checkout') {
-        steps {
-            git 'https://github.com/anku2308/TutorialsNinjaAutomation.git'
+    agent any
+ 
+    tools {
+        jdk 'JAVA_HOME'
+        maven 'MAVEN_HOME'
+    }
+ 
+    stages {
+        stage('Clean Project') {
+            steps {
+                bat 'mvn clean'
+            }
+        }
+ 
+        stage('Run Tests') {
+            steps {
+                catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
+                    bat 'mvn test'
+                }
+            }
+        }
+ 
+        stage('Generate Reports') {
+            steps {
+                publishHTML([
+                    allowMissing: false,
+                    alwaysLinkToLastBuild: true,
+                    keepAll: true,
+                    reportDir: 'test-output',
+                    reportFiles: 'ExtentReport.html',
+                    reportName: 'Extent Report'
+                ])
+                publishHTML([
+                    allowMissing: false,
+                    alwaysLinkToLastBuild: true,
+                    keepAll: true,
+                    reportDir: 'target',
+                    reportFiles: 'cucumber-report.html',
+                    reportName: 'Amazon Cucumber Report'
+                ])
+            }
         }
     }
-
-    stage('Build') {
-        steps {
-            bat 'mvn clean compile'
+ 
+    post {
+        always {
+            archiveArtifacts artifacts: 'test-output/*.html, target/*.html', allowEmptyArchive: true
         }
     }
-
-    stage('Run Tests') {
-        steps {
-            bat 'mvn test'
-        }
-    }
-
-    stage('Generate Report') {
-        steps {
-            publishHTML([
-                allowMissing: false,
-                alwaysLinkToLastBuild: true,
-                keepAll: true,
-                reportDir: 'target',
-                reportFiles: 'cucumber-report.html',
-                reportName: 'Cucumber Report'
-            ])
-        }
-    }
-}
-
-
 }
