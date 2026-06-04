@@ -1,36 +1,23 @@
 pipeline {
-    agent any
- 
-    tools {
-        jdk 'JAVA_HOME'
-        maven 'MAVEN_HOME'
+    agent {
+        docker {
+            // This image comes with Java and Maven pre-installed
+            image 'maven:3.9-eclipse-temurin-21'
+            // This ensures the container runs as your current user
+            args '-u root' 
+        }
     }
  
     stages {
-        stage('Clean Project') {
+        stage('Clean and Test') {
             steps {
-                bat 'mvn clean'
-            }
-        }
- 
-        stage('Run Tests') {
-            steps {
-                catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
-                    bat 'mvn test'
-                }
+                // Now you use 'sh' instead of 'bat' because containers run Linux
+                sh 'mvn clean test'
             }
         }
  
         stage('Generate Reports') {
             steps {
-                publishHTML([
-                    allowMissing: false,
-                    alwaysLinkToLastBuild: true,
-                    keepAll: true,
-                    reportDir: 'test-output',
-                    reportFiles: 'ExtentReport.html',
-                    reportName: 'Extent Report'
-                ])
                 publishHTML([
                     allowMissing: false,
                     alwaysLinkToLastBuild: true,
@@ -42,10 +29,10 @@ pipeline {
             }
         }
     }
- 
+    
     post {
         always {
-            archiveArtifacts artifacts: 'test-output/*.html, target/*.html', allowEmptyArchive: true
+            archiveArtifacts artifacts: 'target/*.html', allowEmptyArchive: true
         }
     }
 }
