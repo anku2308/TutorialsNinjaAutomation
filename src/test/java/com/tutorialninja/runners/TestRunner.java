@@ -4,12 +4,9 @@ import io.cucumber.testng.AbstractTestNGCucumberTests;
 import io.cucumber.testng.CucumberOptions;
 
 @CucumberOptions(
-        features = "src/test/resources/features",
-        glue = "com.opencart.stepdefinitions",
-        plugin = {
-                "pretty",
-                "html:target/cucumber-report.html"
-        },
+	    features = "src/test/resources/features",
+	    glue = "com.tutorialninja.stepdefinitions", // Update this line!
+	    plugin = {"pretty", "html:target/cucumber-reports.html"},
         monochrome = true
 )
 
