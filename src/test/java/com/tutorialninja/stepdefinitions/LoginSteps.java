@@ -2,9 +2,9 @@ package com.tutorialninja.stepdefinitions;
 
 import org.testng.Assert;
 
-import com.opencart.base.DriverSetup;
-import com.opencart.pages.LoginPage;
-import com.opencart.utils.ScreenshotUtil;
+import com.tutorialninja.base.DriverSetup;
+import com.tutorialninja.pages.LoginPage;
+import com.tutorialninja.utils.ScreenshotUtil;
 
 import io.cucumber.java.en.*;
 

@@ -1,4 +1,4 @@
-package com.opencart.pages;
+package com.tutorialninja.pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;

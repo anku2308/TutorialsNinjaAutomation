@@ -1,8 +1,8 @@
 package com.tutorialninja.stepdefinitions;
 
-import com.opencart.base.DriverSetup;
-import com.opencart.pages.ProductPage;
-import com.opencart.utils.ScreenshotUtil;
+import com.tutorialninja.base.DriverSetup;
+import com.tutorialninja.pages.ProductPage;
+import com.tutorialninja.utils.ScreenshotUtil;
 
 import io.cucumber.java.en.*;
 

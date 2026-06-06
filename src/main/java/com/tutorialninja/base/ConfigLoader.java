@@ -1,4 +1,4 @@
-package com.opencart.base;
+package com.tutorialninja.base;
 
 import java.io.FileInputStream;
 import java.io.IOException;

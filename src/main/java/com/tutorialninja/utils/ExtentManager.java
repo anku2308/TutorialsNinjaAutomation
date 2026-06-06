@@ -1,4 +1,4 @@
-package com.opencart.utils;
+package com.tutorialninja.utils;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;

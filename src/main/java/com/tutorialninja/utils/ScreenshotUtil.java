@@ -1,4 +1,4 @@
-package com.opencart.utils;
+package com.tutorialninja.utils;
 
 import java.io.File;
 import java.io.IOException;
